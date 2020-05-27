@@ -433,6 +433,12 @@ class App extends React.Component {
   };
 
   render() {
+    const pdfWidth = window.document.getElementById("main-wrapper")
+      ? parseInt(window.document.getElementById("main-wrapper").style.width)
+      : 0;
+    const pdfHeight = window.document.getElementById("main-wrapper")
+      ? parseInt(window.document.getElementById("main-wrapper").clientHeight)
+      : 0;
     return (
       <div className="App">
         <div className="header">
@@ -675,6 +681,11 @@ class App extends React.Component {
               &nbsp;
               <ExportPDF
                 targetRef={this.pdfRef}
+                options={{
+                  orientation: "landscapce",
+                  unit: "px",
+                  format: [pdfWidth, pdfHeight],
+                }}
                 filename={
                   "lineage-" +
                   new Date().toISOString().replace(/:/g, "-") +
