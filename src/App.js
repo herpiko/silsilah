@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import {v4 as uuidv4} from 'uuid';
 import './App.css';
 
-const prefix = '/';
+const prefix = '/silsilah';
 
 // Basic structure
 const tree = [

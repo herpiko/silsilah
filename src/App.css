@@ -85,7 +85,7 @@ body {
   cursor : -webkit-grab;
 }
 .header {
-  z-index:9999;
+  z-index:998;
   background:grey;
   color:white;
   margin-bottom:50px;
@@ -394,7 +394,7 @@ margin-right:30%;
 .modal {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   padding-top: 50px; 
   left: 0;
   top: 0;
