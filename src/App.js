@@ -1,83 +1,87 @@
-import React from 'react';
-import logo from './logo.svg';
-import {v4 as uuidv4} from 'uuid';
-import './App.css';
+import React from "react";
+// import logo from "./logo.svg";
+import { v4 as uuidv4 } from "uuid";
+import "./App.css";
+import Modal from "./components/Modal";
+import ExportPDF from "react-to-pdf";
 
-const prefix = '/silsilah';
+const prefix = "/silsilah";
 
 // Basic structure
 const tree = [
   {
-    id: '00000000-0000-0000-0000-00000000000',
-    type: 'root',
+    id: "00000000-0000-0000-0000-00000000000",
+    type: "root",
   },
   {
-    id: 'd066198b-d26e-4408-b71f-651e6e75d011',
-    parents: ['00000000-0000-0000-0000-00000000000'],
-    type: 'node',
-    name: 'Father',
-    status: 'alive',
-    gender: 'male',
-    spouse: '6e66875d-4b6c-4670-bfbe-876e8ced64b1',
-    fullName: 'Father',
-    birthPlace: 'Jakarta Pusat',
-    birthDate: '19600101',
-    city: 'Jakarta',
-    contact: '+6281234567890',
+    id: "d066198b-d26e-4408-b71f-651e6e75d011",
+    parents: ["00000000-0000-0000-0000-00000000000"],
+    type: "node",
+    name: "Father",
+    status: "alive",
+    gender: "male",
+    spouse: "6e66875d-4b6c-4670-bfbe-876e8ced64b1",
+    fullName: "Father",
+    birthPlace: "Jakarta Pusat",
+    birthDate: "19600101",
+    city: "Jakarta",
+    contact: "+6281234567890",
   },
   {
-    id: '6e66875d-4b6c-4670-bfbe-876e8ced64b1',
-    type: 'node',
-    status: 'deceased',
-    gender: 'female',
-    name: 'Mother',
-    fullName: 'Mother',
-    birthPlace: 'Jakarta Selatan',
-    birthDate: '19700101',
-    city: 'Jakarta',
-    contact: '+6281234567891',
+    id: "6e66875d-4b6c-4670-bfbe-876e8ced64b1",
+    type: "node",
+    status: "deceased",
+    gender: "female",
+    name: "Mother",
+    fullName: "Mother",
+    birthPlace: "Jakarta Selatan",
+    birthDate: "19700101",
+    city: "Jakarta",
+    contact: "+6281234567891",
   },
   {
-    id: '8a6d88a0-285d-4aed-a710-cfbd5f8dc5f6',
+    id: "8a6d88a0-285d-4aed-a710-cfbd5f8dc5f6",
     parents: [
-      'd066198b-d26e-4408-b71f-651e6e75d011',
-      '6e66875d-4b6c-4670-bfbe-876e8ced64b1',
+      "d066198b-d26e-4408-b71f-651e6e75d011",
+      "6e66875d-4b6c-4670-bfbe-876e8ced64b1",
     ],
-    status: 'alive',
-    type: 'node',
-    gender: 'male',
-    name: 'Son',
-    fullName: 'Son',
-    birthPlace: 'Jakarta Barat',
-    birthDate: '19900101',
-    city: 'Jakarta',
-    contact: '+6281234567892',
+    status: "alive",
+    type: "node",
+    gender: "male",
+    name: "Son",
+    fullName: "Son",
+    birthPlace: "Jakarta Barat",
+    birthDate: "19900101",
+    city: "Jakarta",
+    contact: "+6281234567892",
   },
   {
-    id: '14081329-ee06-4f53-8689-c9f716c5e3a2',
+    id: "14081329-ee06-4f53-8689-c9f716c5e3a2",
     parents: [
-      'd066198b-d26e-4408-b71f-651e6e75d011',
-      '6e66875d-4b6c-4670-bfbe-876e8ced64b1',
+      "d066198b-d26e-4408-b71f-651e6e75d011",
+      "6e66875d-4b6c-4670-bfbe-876e8ced64b1",
     ],
-    status: 'alive',
-    type: 'node',
-    gender: 'female',
-    name: 'Daughter',
-    fullName: 'Daughter',
-    birthPlace: 'Jakarta Timur',
-    birthDate: '19900102',
-    city: 'Jakarta',
-    contact: '+6281234567893',
+    status: "alive",
+    type: "node",
+    gender: "female",
+    name: "Daughter",
+    fullName: "Daughter",
+    birthPlace: "Jakarta Timur",
+    birthDate: "19900102",
+    city: "Jakarta",
+    contact: "+6281234567893",
   },
 ];
 
 class Node extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {brand: 'Ford'};
+    this.state = {
+      brand: "Ford",
+    };
   }
   componentDidMount() {
-    let nodes = this.props.tree.filter(data => {
+    let nodes = this.props.tree.filter((data) => {
       let childs = [];
       for (let i in this.props.tree) {
         if (
@@ -125,7 +129,7 @@ class Node extends React.Component {
         }
       }
     }
-    this.setState({nodes: nodes}, () => {
+    this.setState({ nodes: nodes }, () => {
       // Do nothing
     });
   }
@@ -136,46 +140,50 @@ class Node extends React.Component {
           this.state.nodes.map((node, key) => {
             return (
               <div
-                id={this.props.root ? 'root-family' : ''}
+                id={this.props.root ? "root-family" : ""}
                 className="family"
-                key={key}>
-                {key == this.state.nodes.length - 1 &&
+                key={key}
+              >
+                {key === this.state.nodes.length - 1 &&
                   this.state.nodes.length > 1 &&
                   node.exs && (
-                    <div className={'sibling-line-right-with-exs'}></div>
+                    <div className={"sibling-line-right-with-exs"}></div>
                   )}
                 {node.divorcedRemarried &&
                   node.exs &&
                   node.exs.length > 0 &&
                   node.exs.map((ex, k) => {
                     return (
-                      <div style={{display: 'inline-block'}} key={k}>
+                      <div style={{ display: "inline-block" }} key={k}>
                         {this.props.tree
-                          .filter(data => {
-                            return data.id == ex.id;
+                          .filter((data) => {
+                            return data.id === ex.id;
                           })
                           .map((n, ek) => {
                             return (
                               <div className="family" key={ek}>
                                 <div
                                   className={
-                                    'node' +
+                                    "node" +
                                     (n.parents && node.parents.length > 0
-                                      ? ' node-gen'
-                                      : '') +
-                                    (n.status === 'deceased'
-                                      ? ' node-deceased'
-                                      : '')
+                                      ? " node-gen"
+                                      : "") +
+                                    (n.status === "deceased"
+                                      ? " node-deceased"
+                                      : "")
                                   }
-                                  id={n.id}>
+                                  id={n.id}
+                                >
                                   {n.name}
-                                  {n.img && <img width="100" src={n.img} />}
+                                  {n.img && (
+                                    <img width="100" src={n.img} alt="" />
+                                  )}
                                 </div>
-                                {key == this.state.nodes.length - 1 &&
+                                {key === this.state.nodes.length - 1 &&
                                   this.state.nodes.length > 1 &&
                                   node.exs &&
                                   node.exs.length > 0 && (
-                                    <div className={'marital-line-exs'}></div>
+                                    <div className={"marital-line-exs"}></div>
                                   )}
                                 {node.hasChildrenFromExs && (
                                   <div className="derivative-line-ex"></div>
@@ -192,50 +200,55 @@ class Node extends React.Component {
                     );
                   })}
                 <div
-                  id={this.props.root ? 'root-family-sub' : ''}
-                  className="family">
-                  {key == 0 && this.state.nodes.length > 1 && (
-                    <div className={'sibling-line-left'}></div>
+                  id={this.props.root ? "root-family-sub" : ""}
+                  className="family"
+                >
+                  {key === 0 && this.state.nodes.length > 1 && (
+                    <div className={"sibling-line-left"}></div>
                   )}
-                  {key == this.state.nodes.length - 1 &&
+                  {key === this.state.nodes.length - 1 &&
                     this.state.nodes.length > 1 && (
                       <div
                         className={
-                          'sibling-line-right' +
-                          (node.spouse ? ' sibling-line-right-with-spouse' : '')
-                        }></div>
+                          "sibling-line-right" +
+                          (node.spouse ? " sibling-line-right-with-spouse" : "")
+                        }
+                      ></div>
                     )}
-                  {!(key == 0 || key == this.state.nodes.length - 1) &&
+                  {!(key === 0 || key === this.state.nodes.length - 1) &&
                     this.state.nodes.length > 1 && (
-                      <div className={'sibling-line-center'}></div>
+                      <div className={"sibling-line-center"}></div>
                     )}
                   <div
                     className={
-                      'node' +
+                      "node" +
                       (node.parents && node.parents.length > 0
-                        ? ' node-gen'
-                        : '') +
-                      (node.status === 'deceased' ? ' node-deceased' : '')
+                        ? " node-gen"
+                        : "") +
+                      (node.status === "deceased" ? " node-deceased" : "")
                     }
                     id={node.id}
                     onClick={() => {
-                      node.mode = 'edit';
-                      node.scene = 'form';
+                      node.mode = "edit";
+                      node.scene = "form";
                       this.props.showModal(node);
-                    }}>
+                    }}
+                  >
                     {!this.props.root && (
                       <div className="derivative-line-2"></div>
                     )}
-                    {key == 0 && this.state.nodes.length > 1 && node.spouse && (
-                      <div className="sibling-line-left-node"></div>
-                    )}
-                    {key == this.state.nodes.length - 1 &&
+                    {key === 0 &&
                       this.state.nodes.length > 1 &&
                       node.spouse && (
-                        <div className={'sibling-line-right-node'}></div>
+                        <div className="sibling-line-left-node"></div>
+                      )}
+                    {key === this.state.nodes.length - 1 &&
+                      this.state.nodes.length > 1 &&
+                      node.spouse && (
+                        <div className={"sibling-line-right-node"}></div>
                       )}
                     {node.name}
-                    {node.img && <img width="100" src={node.img} />}
+                    {node.img && <img width="100" src={node.img} alt="" />}
                   </div>
                   {node.spouse && !node.divorced && (
                     <div className="marital-line"></div>
@@ -245,22 +258,23 @@ class Node extends React.Component {
                   )}
                   {node.spouse &&
                     this.props.tree
-                      .filter(data => {
-                        return data.id == node.spouse;
+                      .filter((data) => {
+                        return data.id === node.spouse;
                       })
                       .map((n, k) => {
                         return (
                           <div
                             key={k}
                             className={
-                              'node' +
-                              (n.status === 'deceased' ? ' node-deceased' : '')
+                              "node" +
+                              (n.status === "deceased" ? " node-deceased" : "")
                             }
                             onClick={() => {
-                              n.mode = 'edit';
-                              n.scene = 'form';
+                              n.mode = "edit";
+                              n.scene = "form";
                               this.props.showModal(n);
-                            }}>
+                            }}
+                          >
                             {n.name}
                           </div>
                         );
@@ -288,23 +302,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTab: 'tree',
-      tree: JSON.parse(window.localStorage.getItem('tree')) || tree,
-      isNew: window.localStorage.getItem('tree') ? false : true,
+      currentTab: "tree",
+      tree: JSON.parse(window.localStorage.getItem("tree")) || tree,
+      isNew: window.localStorage.getItem("tree") ? false : true,
       scale: 1.0,
+      showModalExport: false,
     };
+    this.pdfRef = React.createRef();
   }
   componentDidMount = () => {
-    let familyTree;
+    // let familyTree;
     this.resizeTreeWidth();
     if (this.state.isNew) {
       setTimeout(() => {
-        if (!window.localStorage.getItem('isReset')) {
+        if (!window.localStorage.getItem("isReset")) {
           alert(
-            'It seems that you have not created any tree yet. You can continue to edit existing basic tree structure or import your existing JSON file.',
+            "It seems that you have not created any tree yet. You can continue to edit existing basic tree structure or import your existing JSON file."
           );
         }
-        window.localStorage.removeItem('isReset');
+        window.localStorage.removeItem("isReset");
       }, 500);
     }
   };
@@ -312,29 +328,29 @@ class App extends React.Component {
   // This help draggable scroll
   resizeTreeWidth = () => {
     setTimeout(() => {
-      if (this.state.currentTab === 'tree') {
+      if (this.state.currentTab === "tree") {
         document
-          .getElementById('main-wrapper')
+          .getElementById("main-wrapper")
           .style.setProperty(
-            'width',
-            document.getElementById('root-family').offsetWidth + 100 + 'px',
+            "width",
+            document.getElementById("root-family").offsetWidth + 100 + "px"
           );
       }
     }, 100);
   };
 
-  showModal = obj => {
-    this.setState({modal: true, node: obj});
+  showModal = (obj) => {
+    this.setState({ modal: true, node: obj });
   };
 
   reset = () => {
     if (
       window.confirm(
-        'You are attempting to reset the tree to the basic tree structure. Please save your work befork dong this. Continue?',
+        "You are attempting to reset the tree to the basic tree structure. Please save your work befork dong this. Continue?"
       )
     ) {
-      window.localStorage.removeItem('tree');
-      window.localStorage.setItem('isReset', 'true');
+      window.localStorage.removeItem("tree");
+      window.localStorage.setItem("isReset", "true");
       window.location = prefix;
     }
   };
@@ -343,42 +359,42 @@ class App extends React.Component {
     let scale = this.state.scale;
     scale += 0.1;
     if (scale > 1) return;
-    this.setState({scale: scale}, () => {
+    this.setState({ scale: scale }, () => {
       document
-        .getElementById('main-wrapper')
-        .style.setProperty('transform', 'scale(' + scale + ')');
+        .getElementById("main-wrapper")
+        .style.setProperty("transform", "scale(" + scale + ")");
     });
   };
 
   zoomOut = () => {
     let scale = this.state.scale;
     scale -= 0.1;
-    this.setState({scale: scale}, () => {
+    this.setState({ scale: scale }, () => {
       document
-        .getElementById('main-wrapper')
-        .style.setProperty('transform', 'scale(' + scale + ')');
+        .getElementById("main-wrapper")
+        .style.setProperty("transform", "scale(" + scale + ")");
     });
   };
 
-  onSearchChange = e => {
+  onSearchChange = (e) => {
     console.log(e.target.value);
-    this.setState({search: e.target.value});
+    this.setState({ search: e.target.value });
   };
 
   // Import data from JSON file
   import = () => {
-    var input = document.createElement('input');
-    input.type = 'file';
+    var input = document.createElement("input");
+    input.type = "file";
 
-    input.onchange = e => {
+    input.onchange = (e) => {
       var file = e.target.files[0];
       var reader = new FileReader();
-      reader.readAsText(file, 'UTF-8');
-      reader.onload = readerEvent => {
+      reader.readAsText(file, "UTF-8");
+      reader.onload = (readerEvent) => {
         var content = readerEvent.target.result;
         try {
           let tree = JSON.parse(content);
-          window.localStorage.setItem('tree', JSON.stringify(tree));
+          window.localStorage.setItem("tree", JSON.stringify(tree));
           window.location = prefix;
         } catch (err) {
           alert(err);
@@ -391,117 +407,135 @@ class App extends React.Component {
   // Export data to JSON file
   export = () => {
     let jsonStr = JSON.stringify(this.state.tree);
-    var pom = document.createElement('a');
+    var pom = document.createElement("a");
     pom.setAttribute(
-      'href',
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr),
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(jsonStr)
     );
     pom.setAttribute(
-      'download',
-      'lineage-' + new Date().toISOString().replace(/:/g, '-') + '.json',
+      "download",
+      "lineage-" + new Date().toISOString().replace(/:/g, "-") + ".json"
     );
 
     if (document.createEvent) {
-      var event = document.createEvent('MouseEvents');
-      event.initEvent('click', true, true);
+      var event = document.createEvent("MouseEvents");
+      event.initEvent("click", true, true);
       pom.dispatchEvent(event);
     } else {
       pom.click();
     }
   };
 
+  initExport = () => {
+    this.setState({
+      showModalExport: true,
+    });
+  };
+
   render() {
+    const pdfWidth = window.document.getElementById("main-wrapper")
+      ? parseInt(window.document.getElementById("main-wrapper").style.width)
+      : 0;
+    const pdfHeight = window.document.getElementById("main-wrapper")
+      ? parseInt(window.document.getElementById("main-wrapper").clientHeight)
+      : 0;
     return (
       <div className="App">
         <div className="header">
-          <div style={{height: 23}}>&nbsp;</div>
+          <div style={{ height: 23 }}>&nbsp;</div>
           <div>
             <div
               className={
-                'main-menu-item' +
-                (this.state.currentTab === 'list'
-                  ? ' main-menu-item-selected'
-                  : '')
+                "main-menu-item" +
+                (this.state.currentTab === "list"
+                  ? " main-menu-item-selected"
+                  : "")
               }
               onClick={() => {
                 console.log(JSON.stringify(this.state.node));
                 window.localStorage.setItem(
-                  'tree',
-                  JSON.stringify(this.state.tree),
+                  "tree",
+                  JSON.stringify(this.state.tree)
                 );
-                this.setState({currentTab: 'list'});
-              }}>
+                this.setState({ currentTab: "list" });
+              }}
+            >
               List
             </div>
             <div
               className={
-                'main-menu-item' +
-                (this.state.currentTab === 'tree'
-                  ? ' main-menu-item-selected'
-                  : '')
+                "main-menu-item" +
+                (this.state.currentTab === "tree"
+                  ? " main-menu-item-selected"
+                  : "")
               }
               onClick={() => {
-                if (this.state.currentTab === 'tree') return;
+                if (this.state.currentTab === "tree") return;
                 window.location = prefix;
-              }}>
+              }}
+            >
               Tree
             </div>
           </div>
-            <div className="tools">
-              <button onClick={this.import}>Import</button>&nbsp;&nbsp;
-              <button onClick={this.export}>Export</button>&nbsp;&nbsp;
-              <button onClick={this.reset}>Reset</button>&nbsp;&nbsp;
-              {this.state.currentTab === 'tree' &&
-              <div style={{display:'inline-block', color:'grey'}}>
-              <button onClick={this.zoomIn}>Zoom in</button>&nbsp;&nbsp;
-              <button onClick={this.zoomOut}>Zoom out</button>
-              {/* Legenda*/}
-              <div
-                style={{
-                  marginLeft: 10,
-                  width: 15,
-                  height: 3,
-                  background: 'blue',
-                  display: 'inline-block',
-                }}></div>
-              <span style={{fontSize: 12, paddingLeft: 5}}>
-                Original derivatives
-              </span>
-              <div
-                style={{
-                  marginLeft: 10,
-                  width: 15,
-                  height: 3,
-                  background: 'green',
-                  display: 'inline-block',
-                }}></div>
-              <span style={{fontSize: 12, paddingLeft: 5}}>Outsider</span>
-              <div
-                style={{
-                  marginLeft: 10,
-                  width: 15,
-                  height: 3,
-                  background: 'red',
-                  display: 'inline-block',
-                }}></div>
-              <span style={{fontSize: 12, paddingLeft: 5}}>Divorced</span>
-              <div
-                style={{
-                  verticalAlign:'bottom',
-                  marginBottom:2,
-                  marginLeft: 10,
-                  width: 15,
-                  height: 15,
-                  background: 'grey',
-                  display: 'inline-block',
-                }}></div>
-              <span style={{fontSize: 12, paddingLeft: 5}}>Deceased</span>
+          <div className="tools">
+            <button onClick={this.import}>Import</button>&nbsp;&nbsp;
+            <button onClick={this.initExport}>Export</button>&nbsp;&nbsp;
+            <button onClick={this.reset}>Reset</button>&nbsp;&nbsp;
+            {this.state.currentTab === "tree" && (
+              <div style={{ display: "inline-block", color: "grey" }}>
+                <button onClick={this.zoomIn}>Zoom in</button>&nbsp;&nbsp;
+                <button onClick={this.zoomOut}>Zoom out</button>
+                {/* Legenda*/}
+                <div
+                  style={{
+                    marginLeft: 10,
+                    width: 15,
+                    height: 3,
+                    background: "blue",
+                    display: "inline-block",
+                  }}
+                ></div>
+                <span style={{ fontSize: 12, paddingLeft: 5 }}>
+                  Original derivatives
+                </span>
+                <div
+                  style={{
+                    marginLeft: 10,
+                    width: 15,
+                    height: 3,
+                    background: "green",
+                    display: "inline-block",
+                  }}
+                ></div>
+                <span style={{ fontSize: 12, paddingLeft: 5 }}>Outsider</span>
+                <div
+                  style={{
+                    marginLeft: 10,
+                    width: 15,
+                    height: 3,
+                    background: "red",
+                    display: "inline-block",
+                  }}
+                ></div>
+                <span style={{ fontSize: 12, paddingLeft: 5 }}>Divorced</span>
+                <div
+                  style={{
+                    verticalAlign: "bottom",
+                    marginBottom: 2,
+                    marginLeft: 10,
+                    width: 15,
+                    height: 15,
+                    background: "grey",
+                    display: "inline-block",
+                  }}
+                ></div>
+                <span style={{ fontSize: 12, paddingLeft: 5 }}>Deceased</span>
               </div>
-              }
-            </div>
+            )}
+          </div>
         </div>
         {/* List */}
-        {this.state.currentTab === 'list' && (
+        {this.state.currentTab === "list" && (
           <div className="family-list">
             <div className="family-list-sidebar">
               <div>
@@ -509,26 +543,27 @@ class App extends React.Component {
                   <div
                     className="family-list-button"
                     onClick={() => {
-                      this.setState({form: false}, () => {
+                      this.setState({ form: false }, () => {
                         this.setState({
                           form: true,
                           node: {
-                            name: '',
-                            fullName: '',
-                            birthPlace: '',
-                            birthDate: '',
-                            city: '',
-                            contact: '',
-                            gender: 'male',
-                            status: 'alive',
-                            firstParent: '',
-                            secondParent: '',
+                            name: "",
+                            fullName: "",
+                            birthPlace: "",
+                            birthDate: "",
+                            city: "",
+                            contact: "",
+                            gender: "male",
+                            status: "alive",
+                            firstParent: "",
+                            secondParent: "",
                             exs: [],
-                            mode: 'new',
+                            mode: "new",
                           },
                         });
                       });
-                    }}>
+                    }}
+                  >
                     Add
                   </div>
                 </div>
@@ -541,10 +576,10 @@ class App extends React.Component {
               </div>
               <div className="family-list-items">
                 {this.state.tree
-                  .filter(data => {
+                  .filter((data) => {
                     if (
-                      data.id === '00000000-0000-0000-0000-00000000000' ||
-                      data.id === '0'
+                      data.id === "00000000-0000-0000-0000-00000000000" ||
+                      data.id === "0"
                     ) {
                       return false;
                     }
@@ -571,18 +606,19 @@ class App extends React.Component {
                       <div
                         key={key}
                         className={
-                          'family-list-item' +
+                          "family-list-item" +
                           (this.state.node && this.state.node.id === item.id
-                            ? ' family-list-item-selected'
-                            : '')
+                            ? " family-list-item-selected"
+                            : "")
                         }
                         onClick={() => {
                           let node = item;
-                          node.mode = 'edit';
-                          this.setState({form: false}, () => {
-                            this.setState({form: true, node: node});
+                          node.mode = "edit";
+                          this.setState({ form: false }, () => {
+                            this.setState({ form: true, node: node });
                           });
-                        }}>
+                        }}
+                      >
                         {item.name}
                       </div>
                     );
@@ -598,11 +634,11 @@ class App extends React.Component {
         )}
 
         {/* Tree */}
-        {this.state.currentTab === 'tree' && (
+        {this.state.currentTab === "tree" && (
           <div className="family-tree">
             {/* Family tree */}
             <div className="dragscroll">
-              <div id="main-wrapper">
+              <div id="main-wrapper" ref={this.pdfRef}>
                 <Node
                   tree={this.state.tree}
                   parents={[this.state.tree[0].id]}
@@ -621,15 +657,46 @@ class App extends React.Component {
                 <div
                   className="close"
                   onClick={() => {
-                    this.setState({modal: false, node: {}});
-                  }}>
-                  &#10060;{' '}
+                    this.setState({ modal: false, node: {} });
+                  }}
+                >
+                  <span role="img" aria-label="">
+                    &#10060;{" "}
+                  </span>
                 </div>
               </div>
               <Form tree={this.state.tree} node={this.state.node} />
             </div>
           </div>
         )}
+        <Modal
+          show={this.state.showModalExport}
+          handleClose={() => {
+            this.setState({ showModalExport: false });
+          }}
+          content={
+            <div>
+              <h4>Export</h4>
+              <button onClick={this.export}>Export to JSON</button>
+              &nbsp;
+              <ExportPDF
+                targetRef={this.pdfRef}
+                options={{
+                  orientation: "landscapce",
+                  unit: "px",
+                  format: [pdfWidth, pdfHeight],
+                }}
+                filename={
+                  "lineage-" +
+                  new Date().toISOString().replace(/:/g, "-") +
+                  ".pdf"
+                }
+              >
+                {({ toPdf }) => <button onClick={toPdf}>Export to PDF</button>}
+              </ExportPDF>
+            </div>
+          }
+        />
       </div>
     );
   }
@@ -641,7 +708,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scene: 'form',
+      scene: "form",
     };
   }
   componentDidMount = () => {
@@ -683,7 +750,7 @@ class Form extends React.Component {
     }
     this.setState(obj);
   };
-  onChange = e => {
+  onChange = (e) => {
     if (e && e.target && e.target.name && e.target.value) {
       let obj = {};
       obj[e.target.name] = e.target.value;
@@ -692,7 +759,7 @@ class Form extends React.Component {
   };
 
   remove = () => {
-    this.setState({search: null});
+    this.setState({ search: null });
     let tree = this.props.tree;
     for (let i in tree) {
       console.log(tree[i]);
@@ -701,11 +768,11 @@ class Form extends React.Component {
         break;
       }
     }
-    window.localStorage.setItem('tree', JSON.stringify(tree));
+    window.localStorage.setItem("tree", JSON.stringify(tree));
     window.location = prefix;
   };
   save = () => {
-    this.setState({search: null});
+    this.setState({ search: null });
     let tree = this.props.tree;
     for (let i in tree) {
       if (tree[i].id === this.state.id) {
@@ -729,11 +796,11 @@ class Form extends React.Component {
         break;
       }
     }
-    window.localStorage.setItem('tree', JSON.stringify(tree));
+    window.localStorage.setItem("tree", JSON.stringify(tree));
     window.location = prefix;
   };
   add = () => {
-    this.setState({search: null});
+    this.setState({ search: null });
     let tree = this.props.tree;
     tree.push({
       id: uuidv4(),
@@ -751,24 +818,27 @@ class Form extends React.Component {
       spouse: this.state.spouse,
       exs: this.state.exs || [],
     });
-    window.localStorage.setItem('tree', JSON.stringify(tree));
+    window.localStorage.setItem("tree", JSON.stringify(tree));
     window.location = prefix;
   };
-  onSearchChange = e => {
+  onSearchChange = (e) => {
     console.log(e.target.value);
-    this.setState({search: e.target.value});
+    this.setState({ search: e.target.value });
   };
   render() {
     return (
       <div>
-        {this.state.scene === 'selectParent' && (
+        {this.state.scene === "selectParent" && (
           <div>
             <div
               className="close"
               onClick={() => {
-                this.setState({scene: 'form'});
-              }}>
-              &#10060;{' '}
+                this.setState({ scene: "form" });
+              }}
+            >
+              <span role="img" aria-label="">
+                &#10060;{" "}
+              </span>
             </div>
             <div className="select-for-label">
               Select parent for {this.state.name}
@@ -783,10 +853,10 @@ class Form extends React.Component {
             <div className="family-list-items">
               {this.props.tree &&
                 this.props.tree
-                  .filter(data => {
+                  .filter((data) => {
                     if (
-                      data.id === '00000000-0000-0000-0000-00000000000' ||
-                      data.id === '0'
+                      data.id === "00000000-0000-0000-0000-00000000000" ||
+                      data.id === "0"
                     ) {
                       return false;
                     }
@@ -822,17 +892,18 @@ class Form extends React.Component {
                             this.setState({
                               firstParent: node.name,
                               parents: parents,
-                              scene: 'form',
+                              scene: "form",
                             });
                           } else if (parents) {
                             parents.push(node.id);
                             this.setState({
                               secondParent: node.name,
                               parents: parents,
-                              scene: 'form',
+                              scene: "form",
                             });
                           }
-                        }}>
+                        }}
+                      >
                         {item.name}
                       </div>
                     );
@@ -840,14 +911,17 @@ class Form extends React.Component {
             </div>
           </div>
         )}
-        {this.state.scene === 'selectSpouse' && (
+        {this.state.scene === "selectSpouse" && (
           <div>
             <div
               className="close"
               onClick={() => {
-                this.setState({scene: 'form'});
-              }}>
-              &#10060;{' '}
+                this.setState({ scene: "form" });
+              }}
+            >
+              <span role="img" aria-label="">
+                &#10060;{" "}
+              </span>
             </div>
             <div className="select-for-label">
               Select spouse for {this.state.name}
@@ -862,10 +936,10 @@ class Form extends React.Component {
             <div className="family-list-items">
               {this.props.tree &&
                 this.props.tree
-                  .filter(data => {
+                  .filter((data) => {
                     if (
-                      data.id === '00000000-0000-0000-0000-00000000000' ||
-                      data.id === '0'
+                      data.id === "00000000-0000-0000-0000-00000000000" ||
+                      data.id === "0"
                     ) {
                       return false;
                     }
@@ -897,9 +971,10 @@ class Form extends React.Component {
                           this.setState({
                             spouseName: node.name,
                             spouse: node.id,
-                            scene: 'form',
+                            scene: "form",
                           });
-                        }}>
+                        }}
+                      >
                         {item.name}
                       </div>
                     );
@@ -907,14 +982,17 @@ class Form extends React.Component {
             </div>
           </div>
         )}
-        {this.state.scene === 'selectEx' && (
+        {this.state.scene === "selectEx" && (
           <div>
             <div
               className="close"
               onClick={() => {
-                this.setState({scene: 'form'});
-              }}>
-              &#10060;{' '}
+                this.setState({ scene: "form" });
+              }}
+            >
+              <span role="img" aria-label="">
+                &#10060;{" "}
+              </span>
             </div>
             <div className="select-for-label">
               Select ex for {this.state.name}
@@ -929,10 +1007,10 @@ class Form extends React.Component {
             <div className="family-list-items">
               {this.props.tree &&
                 this.props.tree
-                  .filter(data => {
+                  .filter((data) => {
                     if (
-                      data.id === '00000000-0000-0000-0000-00000000000' ||
-                      data.id === '0'
+                      data.id === "00000000-0000-0000-0000-00000000000" ||
+                      data.id === "0"
                     ) {
                       return false;
                     }
@@ -963,10 +1041,11 @@ class Form extends React.Component {
                           let node = item;
                           this.setState({
                             exName: node.name,
-                            exs: [{id: node.id}],
-                            scene: 'form',
+                            exs: [{ id: node.id }],
+                            scene: "form",
                           });
-                        }}>
+                        }}
+                      >
                         {item.name}
                       </div>
                     );
@@ -974,7 +1053,7 @@ class Form extends React.Component {
             </div>
           </div>
         )}
-        {this.state.scene === 'form' && (
+        {this.state.scene === "form" && (
           <div>
             <div className="family-list-form">
               <div className="family-list-form-label">Name</div>
@@ -1047,32 +1126,35 @@ class Form extends React.Component {
               <div className="family-list-form-free-input">
                 <span
                   className={
-                    'radio' +
-                    (this.state.gender === 'male' ? ' radio-selected' : '')
+                    "radio" +
+                    (this.state.gender === "male" ? " radio-selected" : "")
                   }
                   onClick={() => {
-                    this.setState({gender: 'male'});
-                  }}>
+                    this.setState({ gender: "male" });
+                  }}
+                >
                   Male
                 </span>
                 <span
                   className={
-                    'radio' +
-                    (this.state.gender === 'female' ? ' radio-selected' : '')
+                    "radio" +
+                    (this.state.gender === "female" ? " radio-selected" : "")
                   }
                   onClick={() => {
-                    this.setState({gender: 'female'});
-                  }}>
+                    this.setState({ gender: "female" });
+                  }}
+                >
                   Female
                 </span>
                 <span
                   className={
-                    'radio' +
-                    (this.state.gender === 'other' ? ' radio-selected' : '')
+                    "radio" +
+                    (this.state.gender === "other" ? " radio-selected" : "")
                   }
                   onClick={() => {
-                    this.setState({gender: 'other'});
-                  }}>
+                    this.setState({ gender: "other" });
+                  }}
+                >
                   Other
                 </span>
               </div>
@@ -1082,22 +1164,24 @@ class Form extends React.Component {
               <div className="family-list-form-free-input">
                 <span
                   className={
-                    'radio' +
-                    (this.state.status === 'alive' ? ' radio-selected' : '')
+                    "radio" +
+                    (this.state.status === "alive" ? " radio-selected" : "")
                   }
                   onClick={() => {
-                    this.setState({status: 'alive'});
-                  }}>
+                    this.setState({ status: "alive" });
+                  }}
+                >
                   Alive
                 </span>
                 <span
                   className={
-                    'radio' +
-                    (this.state.status === 'deceased' ? ' radio-selected' : '')
+                    "radio" +
+                    (this.state.status === "deceased" ? " radio-selected" : "")
                   }
                   onClick={() => {
-                    this.setState({status: 'deceased'});
-                  }}>
+                    this.setState({ status: "deceased" });
+                  }}
+                >
                   Deceased
                 </span>
               </div>
@@ -1107,21 +1191,21 @@ class Form extends React.Component {
               this.state.parents &&
               this.state.parents[0] &&
               (this.state.parents[0] ===
-                '00000000-0000-0000-0000-00000000000' ||
-                this.state.parents[0] === '0')
+                "00000000-0000-0000-0000-00000000000" ||
+                this.state.parents[0] === "0")
             ) && (
               <div className="family-list-form">
                 <div className="family-list-form-label">1st Parent</div>
                 <div className="family-list-form-free-input">
                   <span
                     className={
-                      'radio' +
+                      "radio" +
                       (this.state.parents && this.state.parents[0]
-                        ? ' radio-selected'
-                        : '')
+                        ? " radio-selected"
+                        : "")
                     }
                     onClick={() => {
-                      this.setState({search: ''}, () => {
+                      this.setState({ search: "" }, () => {
                         if (
                           !(
                             this.state.parents &&
@@ -1129,10 +1213,11 @@ class Form extends React.Component {
                             this.state.firstParent
                           )
                         ) {
-                          this.setState({scene: 'selectParent'});
+                          this.setState({ scene: "selectParent" });
                         }
                       });
-                    }}>
+                    }}
+                  >
                     {this.state.parents &&
                       this.state.parents[0] &&
                       this.state.firstParent}
@@ -1140,7 +1225,7 @@ class Form extends React.Component {
                       this.state.parents &&
                       this.state.parents[0] &&
                       this.state.firstParent
-                    ) && 'Select'}
+                    ) && "Select"}
                   </span>
                   {this.state.parents &&
                     this.state.parents[0] &&
@@ -1168,7 +1253,8 @@ class Form extends React.Component {
                               secondParent: null,
                             });
                           }
-                        }}>
+                        }}
+                      >
                         -
                       </div>
                     )}
@@ -1180,21 +1266,21 @@ class Form extends React.Component {
               this.state.parents &&
               this.state.parents[0] &&
               (this.state.parents[0] ===
-                '00000000-0000-0000-0000-00000000000' ||
-                this.state.parents[0] === '0')
+                "00000000-0000-0000-0000-00000000000" ||
+                this.state.parents[0] === "0")
             ) && (
               <div className="family-list-form">
                 <div className="family-list-form-label">2nd Parent</div>
                 <div className="family-list-form-free-input">
                   <span
                     className={
-                      'radio' +
+                      "radio" +
                       (this.state.parents && this.state.parents[1]
-                        ? ' radio-selected'
-                        : '')
+                        ? " radio-selected"
+                        : "")
                     }
                     onClick={() => {
-                      this.setState({search: ''}, () => {
+                      this.setState({ search: "" }, () => {
                         if (
                           !(
                             this.state.parents &&
@@ -1202,10 +1288,11 @@ class Form extends React.Component {
                             this.state.secondParent
                           )
                         ) {
-                          this.setState({scene: 'selectParent'});
+                          this.setState({ scene: "selectParent" });
                         }
                       });
-                    }}>
+                    }}
+                  >
                     {this.state.parents &&
                       this.state.parents[1] &&
                       this.state.secondParent}
@@ -1213,7 +1300,7 @@ class Form extends React.Component {
                       this.state.parents &&
                       this.state.parents[1] &&
                       this.state.secondParent
-                    ) && 'Select'}
+                    ) && "Select"}
                   </span>
                   {this.state.parents &&
                     this.state.parents[1] &&
@@ -1226,7 +1313,8 @@ class Form extends React.Component {
                             parents: parents,
                             secondParent: null,
                           });
-                        }}>
+                        }}
+                      >
                         -
                       </div>
                     )}
@@ -1238,21 +1326,22 @@ class Form extends React.Component {
               <div className="family-list-form-free-input">
                 <span
                   className={
-                    'radio' +
+                    "radio" +
                     (this.state.spouse && this.state.spouse.length > 0
-                      ? ' radio-selected'
-                      : '')
+                      ? " radio-selected"
+                      : "")
                   }
                   onClick={() => {
-                    this.setState({search: ''}, () => {
+                    this.setState({ search: "" }, () => {
                       if (!this.state.spouse) {
-                        this.setState({scene: 'selectSpouse'});
+                        this.setState({ scene: "selectSpouse" });
                       }
                     });
-                  }}>
+                  }}
+                >
                   {this.state.spouseName}
                   {!(this.state.spouse && this.state.spouse.length > 0) &&
-                    'Select'}
+                    "Select"}
                 </span>
                 {this.state.spouse && this.state.spouse && (
                   <div
@@ -1262,7 +1351,8 @@ class Form extends React.Component {
                         spouseName: null,
                         spouse: null,
                       });
-                    }}>
+                    }}
+                  >
                     -
                   </div>
                 )}
@@ -1273,23 +1363,24 @@ class Form extends React.Component {
               <div className="family-list-form-free-input">
                 <span
                   className={
-                    'radio' +
+                    "radio" +
                     (this.state.exs && this.state.exs.length > 0
-                      ? ' radio-selected'
-                      : '')
+                      ? " radio-selected"
+                      : "")
                   }
                   onClick={() => {
-                    this.setState({search: ''}, () => {
+                    this.setState({ search: "" }, () => {
                       if (!(this.state.exs && this.state.exs.length > 0)) {
-                        this.setState({scene: 'selectEx'});
+                        this.setState({ scene: "selectEx" });
                       }
                     });
-                  }}>
+                  }}
+                >
                   {this.state.exName}
                   {!(
                     (this.state.ex && this.state.exs.length > 0) ||
                     (this.state.exName && this.state.exName.length > 0)
-                  ) && 'Select'}
+                  ) && "Select"}
                 </span>
                 {this.state.exs && this.state.exs.length > 0 && (
                   <div
@@ -1299,7 +1390,8 @@ class Form extends React.Component {
                         exName: null,
                         exs: [],
                       });
-                    }}>
+                    }}
+                  >
                     -
                   </div>
                 )}
@@ -1307,31 +1399,34 @@ class Form extends React.Component {
             </div>
             <div className="family-list-form">
               <div className="family-list-form-label"></div>
-              {this.state.mode === 'edit' && (
+              {this.state.mode === "edit" && (
                 <div className="family-list-form-free-input">
                   <div
                     className="button"
                     onClick={() => {
                       this.remove(this.state.id);
-                    }}>
+                    }}
+                  >
                     Remove
                   </div>
                   <div
                     className="button"
                     onClick={() => {
                       this.save();
-                    }}>
+                    }}
+                  >
                     Save
                   </div>
                 </div>
               )}
-              {this.state.mode === 'new' && (
+              {this.state.mode === "new" && (
                 <div className="family-list-form-free-input">
                   <div
                     className="button"
                     onClick={() => {
                       this.add();
-                    }}>
+                    }}
+                  >
                     Add
                   </div>
                 </div>
