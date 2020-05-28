@@ -62,10 +62,11 @@ body {
 
 
 #main-wrapper {
-  margin-top:100px;
+  margin-top:10vh;
   width:10000000000000px;
   transform:scale(1);
-  margin-bottom:100px;
+  padding-top:100px;
+  margin-bottom:50vh;
 }
 
 .family-list {
@@ -296,7 +297,7 @@ margin-right:30%;
   height:0px;
   border-top: 2px solid blue;
   margin-top:-32px;
-  margin-left:50px;
+  margin-left:51px;
 }
 
 .sibling-line-right {

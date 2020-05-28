@@ -244,6 +244,11 @@ class NodeLegacy extends React.Component {
                       node.spouse && (
                         <div className={'sibling-line-right-node'}></div>
                       )}
+                    {!this.props.root && key === 0 &&
+                      this.state.nodes.length === 1 &&
+                      node.spouse && (
+                        <div className={'sibling-line-left-node'}></div>
+                      )}
                     {node.name}
                     {node.img && <img width="100" src={node.img} alt="" />}
                   </div>
@@ -496,6 +501,10 @@ class App extends React.Component {
                 &nbsp;&nbsp;
                 <button onClick={this.zoomOut}>{t('Zoom out')}</button>
                 {/* Legenda*/}
+              </div>)
+            }
+            {this.state.currentTab === 'tree' && (
+              <div style={{display: 'inline-block', color: 'grey'}}>
                 <div
                   style={{
                     marginLeft: 10,
