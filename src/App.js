@@ -5,7 +5,7 @@ import "./App.css";
 import Modal from "./components/Modal";
 import ExportPDF from "react-to-pdf";
 
-const prefix = "/silsilah";
+const prefix = process.env.REACT_APP_MODE === "prod" ? "/silsilah" : "/";
 
 // Basic structure
 const tree = [
@@ -349,6 +349,7 @@ class App extends React.Component {
         "You are attempting to reset the tree to the basic tree structure. Please save your work befork dong this. Continue?"
       )
     ) {
+      alert(prefix)
       window.localStorage.removeItem("tree");
       window.localStorage.setItem("isReset", "true");
       window.location = prefix;
