@@ -349,7 +349,6 @@ class App extends React.Component {
         "You are attempting to reset the tree to the basic tree structure. Please save your work befork dong this. Continue?"
       )
     ) {
-      alert(prefix)
       window.localStorage.removeItem("tree");
       window.localStorage.setItem("isReset", "true");
       window.location = prefix;
