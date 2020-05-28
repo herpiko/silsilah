@@ -85,7 +85,7 @@ body {
   cursor : -webkit-grab;
 }
 .header {
-  z-index:998;
+  z-index:997;
   background:grey;
   color:white;
   margin-bottom:50px;
@@ -134,7 +134,7 @@ body {
 
 .family-list-form-label {
   color:grey;
-  width:100px;
+  width:110px;
   display:inline-block; 
   text-align:right;
   padding-right:15px;
@@ -172,7 +172,7 @@ body {
   text-align:left;
   vertical-align:top;
   display:inline-block;
-  width:330px;
+  width:350px;
   background:lightgrey;
   margin-left:15px;
   padding-bottom:20px;
@@ -394,7 +394,7 @@ margin-right:30%;
 .modal {
   display: block;
   position: fixed;
-  z-index: 999;
+  z-index: 998;
   padding-top: 50px; 
   left: 0;
   top: 0;
@@ -454,4 +454,25 @@ margin-right:30%;
   display:inline-block;
   cursor:pointer;
   vertical-align:center;
+}
+
+.i18n {
+  padding:5px 10px 5px 10px;
+  font-size:14px;
+  background:lightgrey;
+  position:fixed;
+  bottom:0;
+  left:0;
+  z-index:999;
+}
+.i18n-options {
+  cursor:pointer;
+  color:grey;
+}
+.i18n-options:hover {
+  cursor:pointer;
+  color:black !important;
+}
+.i18n-selected {
+  color:black !important;
 }

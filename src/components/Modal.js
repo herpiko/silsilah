@@ -6,9 +6,11 @@ function Modal(props) {
       <div className="app-modal">
         <div className="app-modal-content">
           {content}
-          <button className="app-modal-close-btn" onClick={handleClose}>
-            &times;
-          </button>
+          <div className="app-modal-close-btn" onClick={handleClose}>
+                  <span role="img" aria-label="">
+                    &#10060;{' '}
+                  </span>
+          </div>
         </div>
       </div>
     );
