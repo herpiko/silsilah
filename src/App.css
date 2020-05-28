@@ -234,9 +234,9 @@ body {
 }
 
 .family {
+  border:0px solid orange; /* For debugging purpose*/
   display:inline-block;
   vertical-align:top;
-  border:0px solid orange;
   border-radius:5px;
   padding-right:10px;
   padding-left:10px;
@@ -292,11 +292,11 @@ margin-right:30%;
 .sibling-line-left-node {
   display:block;
   float:left;
-  width:70px;
+  width:72px;
   height:0px;
   border-top: 2px solid blue;
   margin-top:-32px;
-  margin-left:52px;
+  margin-left:50px;
 }
 
 .sibling-line-right {

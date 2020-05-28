@@ -145,9 +145,9 @@ class NodeLegacy extends React.Component {
                 id={this.props.root ? 'root-family' : ''}
                 className="family"
                 key={key}>
-                {key === this.state.nodes.length - 1 &&
-                  this.state.nodes.length > 1 &&
-                  node.exs && (
+                {this.state.nodes.length > 1 &&
+                  node.exs &&
+                  node.exs.length > 0 && (
                     <div className={'sibling-line-right-with-exs'}></div>
                   )}
                 {node.divorcedRemarried &&
@@ -314,9 +314,7 @@ class App extends React.Component {
     if (this.state.isNew) {
       setTimeout(() => {
         if (!window.localStorage.getItem('isReset')) {
-          alert(
-            this.props.t('welcomeAlert')
-          );
+          alert(this.props.t('welcomeAlert'));
         }
         window.localStorage.removeItem('isReset');
       }, 500);
@@ -342,11 +340,7 @@ class App extends React.Component {
   };
 
   reset = () => {
-    if (
-      window.confirm(
-        this.props.t('resetConfirm')
-      )
-    ) {
+    if (window.confirm(this.props.t('resetConfirm'))) {
       window.localStorage.removeItem('tree');
       window.localStorage.setItem('isReset', 'true');
       window.location = prefix;
@@ -433,7 +427,8 @@ class App extends React.Component {
   render() {
     const {t, i18n} = this.props;
     const pdfWidth = window.document.getElementById('main-wrapper')
-      ? parseInt(window.document.getElementById('main-wrapper').clientWidth) * (75/100)
+      ? parseInt(window.document.getElementById('main-wrapper').clientWidth) *
+        (75 / 100)
       : 0;
     const pdfHeight = window.document.getElementById('main-wrapper')
       ? parseInt(window.document.getElementById('main-wrapper').clientHeight)
@@ -497,7 +492,8 @@ class App extends React.Component {
             <button onClick={this.reset}>{t('Reset')}</button>&nbsp;&nbsp;
             {this.state.currentTab === 'tree' && (
               <div style={{display: 'inline-block', color: 'grey'}}>
-                <button onClick={this.zoomIn}>{t('Zoom in')}</button>&nbsp;&nbsp;
+                <button onClick={this.zoomIn}>{t('Zoom in')}</button>
+                &nbsp;&nbsp;
                 <button onClick={this.zoomOut}>{t('Zoom out')}</button>
                 {/* Legenda*/}
                 <div
@@ -544,7 +540,8 @@ class App extends React.Component {
                     display: 'inline-block',
                   }}></div>
                 <span style={{fontSize: 12, paddingLeft: 5}}>
-                {t('Deceased')}</span>
+                  {t('Deceased')}
+                </span>
               </div>
             )}
           </div>
@@ -703,7 +700,9 @@ class App extends React.Component {
                   new Date().toISOString().replace(/:/g, '-') +
                   '.pdf'
                 }>
-                {({toPdf}) => <button onClick={toPdf}>{t('Export to PDF')}</button>}
+                {({toPdf}) => (
+                  <button onClick={toPdf}>{t('Export to PDF')}</button>
+                )}
               </ExportPDF>
             </div>
           }
@@ -770,7 +769,11 @@ class FormLegacy extends React.Component {
   };
 
   remove = () => {
-    if (!window.confirm(this.props.t('Are you sure that you want to remove this node?'))) {
+    if (
+      !window.confirm(
+        this.props.t('Are you sure that you want to remove this node?'),
+      )
+    ) {
       return;
     }
     this.setState({search: null});
@@ -846,7 +849,7 @@ class FormLegacy extends React.Component {
         {this.state.scene === 'selectParent' && (
           <div>
             <div className="select-for-label">
-             {t('Select parent for')} {this.state.name}
+              {t('Select parent for')} {this.state.name}
             </div>
             <input
               placeholder={t('Search')}
@@ -1124,7 +1127,7 @@ class FormLegacy extends React.Component {
                   onClick={() => {
                     this.setState({gender: 'female'});
                   }}>
-{t('Female')}
+                  {t('Female')}
                 </span>
                 <span
                   className={
@@ -1313,7 +1316,7 @@ class FormLegacy extends React.Component {
                   }}>
                   {this.state.spouseName}
                   {!(this.state.spouse && this.state.spouse.length > 0) &&
-                   t('Select')}
+                    t('Select')}
                 </span>
                 {this.state.spouse && this.state.spouse && (
                   <div
