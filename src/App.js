@@ -244,7 +244,8 @@ class NodeLegacy extends React.Component {
                       node.spouse && (
                         <div className={'sibling-line-right-node'}></div>
                       )}
-                    {!this.props.root && key === 0 &&
+                    {!this.props.root &&
+                      key === 0 &&
                       this.state.nodes.length === 1 &&
                       node.spouse && (
                         <div className={'sibling-line-left-node'}></div>
@@ -336,6 +337,13 @@ class App extends React.Component {
             'width',
             document.getElementById('root-family').offsetWidth + 100 + 'px',
           );
+        document
+          .getElementById('center')
+          .scrollIntoView({
+            behaviour: 'smooth',
+            inline: 'center',
+            block: 'center',
+          });
       }
     }, 100);
   };
@@ -501,8 +509,8 @@ class App extends React.Component {
                 &nbsp;&nbsp;
                 <button onClick={this.zoomOut}>{t('Zoom out')}</button>
                 {/* Legenda*/}
-              </div>)
-            }
+              </div>
+            )}
             {this.state.currentTab === 'tree' && (
               <div style={{display: 'inline-block', color: 'grey'}}>
                 <div
@@ -658,6 +666,7 @@ class App extends React.Component {
             {/* Family tree */}
             <div className="dragscroll">
               <div id="main-wrapper" ref={this.pdfRef}>
+                <div style={{width: 0, margin: '0 auto'}} id="center"></div>
                 <Node
                   tree={this.state.tree}
                   parents={[this.state.tree[0].id]}
