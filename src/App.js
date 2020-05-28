@@ -432,9 +432,8 @@ class App extends React.Component {
 
   render() {
     const {t, i18n} = this.props;
-
     const pdfWidth = window.document.getElementById('main-wrapper')
-      ? parseInt(window.document.getElementById('main-wrapper').style.width)
+      ? parseInt(window.document.getElementById('main-wrapper').clientWidth) * (75/100)
       : 0;
     const pdfHeight = window.document.getElementById('main-wrapper')
       ? parseInt(window.document.getElementById('main-wrapper').clientHeight)
