@@ -337,13 +337,11 @@ class App extends React.Component {
             'width',
             document.getElementById('root-family').offsetWidth + 100 + 'px',
           );
-        document
-          .getElementById('center')
-          .scrollIntoView({
-            behaviour: 'smooth',
-            inline: 'center',
-            block: 'center',
-          });
+        document.getElementById('center').scrollIntoView({
+          behaviour: 'smooth',
+          inline: 'center',
+          block: 'center',
+        });
       }
     }, 100);
   };
@@ -466,7 +464,10 @@ class App extends React.Component {
           </span>
         </div>
         <div className="header">
-          <div style={{height: 23}}>&nbsp;</div>
+          <div
+            style={{height: 27, color: '#a1a1a1', fontSize: 14, paddingTop: 3}}>
+            Ojo nganti kepatèn obor
+          </div>
           <div>
             <div
               className={

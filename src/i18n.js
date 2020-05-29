@@ -56,7 +56,7 @@ i18n.use(LanguageDetector).init({
     },
     id: {
       translations: {
-        Tree: 'Pohon',
+        Tree: 'Trah',
         List: 'Daftar',
         'Zoom in': 'Besarkan',
         'Zoom out': 'Kecilkan',

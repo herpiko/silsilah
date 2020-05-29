@@ -95,12 +95,12 @@ body {
   text-align:center;
   top:0;
   left:0;
-  height:50px;
+  height:57px;
   padding-top:5px;
 }
 .main-menu-item-selected {
   background:lightgrey !important;
-  color:black;
+  color:grey;
 }
 .main-menu-item:hover {
   color:grey !important;
@@ -220,7 +220,7 @@ body {
 
 .tools {
   background:lightgrey;
-  margin-top:55px;
+  margin-top:62px;
   margin-bottom:50px;
   position:fixed;
   width:100vw;
