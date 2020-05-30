@@ -87,9 +87,8 @@ body {
 }
 
 .dragscroll {
-  width:100vw;
-  height:calc(100vh - 150px);
-  padding-top:160px;
+  width:calc(100vw - 300px);
+  height:100vh;
   overflow: scroll;
   cursor: grab;
   cursor : -o-grab;
@@ -157,6 +156,7 @@ body {
   font-size:14px;
   width:200px;
   height:30px;
+  border-radius:5px;
 }
 
 .family-list-form-free-input {
@@ -197,34 +197,16 @@ body {
   width:30px !important;
   height:30px !important;
   border-radius:30px !important;
-  font-size:20px !important;
+  font-size:21px !important;
 }
 
 .button {
   padding:4px 8px 4px 7px;
   border-radius:5px;
   margin-right:10px;
-  background:lightgrey;
   width:50px;
-  color:grey;
-  text-align:center;
-  display:inline-block;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.button:hover {
-  background:#384190 !important;
-  color:white !important;
-}
-
-.button {
-  padding:4px 8px 4px 7px;
-  border-radius:5px;
-  margin-right:10px;
-  background:lightgrey;
-  width:50px;
-  color:grey;
+  background: #596aca;
+  color:white;
   text-align:center;
   display:inline-block;
   cursor:pointer;
@@ -282,8 +264,8 @@ body {
 .family-list-button {
   padding:7px 10px 7px 10px;
   border-radius:7px;
-  background:lightgrey;
-  color:grey;
+  background: #596aca;
+  color:white;
   width:92%;
   text-align:center;
   display:inline-block;
