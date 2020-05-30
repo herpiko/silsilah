@@ -335,7 +335,7 @@ class App extends React.Component {
           .getElementById('main-wrapper')
           .style.setProperty(
             'width',
-            document.getElementById('root-family').offsetWidth + 100 + 'px',
+            document.getElementById('root-family').offsetWidth + 500 + 'px',
           );
         document.getElementById('center').scrollIntoView({
           behaviour: 'smooth',
@@ -444,139 +444,34 @@ class App extends React.Component {
     const pdfHeight = window.document.getElementById('main-wrapper')
       ? parseInt(window.document.getElementById('main-wrapper').clientHeight)
       : 0;
+
     return (
       <div className="App">
-        <div className="i18n">
-          <span
-            className={'i18n-options'}
-            onClick={() => {
-              i18n.changeLanguage('en');
-            }}>
-            English
-          </span>
-          &nbsp;/&nbsp;
-          <span
-            className={'i18n-options'}
-            onClick={() => {
-              i18n.changeLanguage('id');
-            }}>
-            Bahasa Indonesia
-          </span>
-        </div>
-        <div className="header">
-          <div
-            style={{height: 27, color: '#a1a1a1', fontSize: 14, paddingTop: 3}}>
-            Ojo nganti kepatèn obor
-          </div>
-          <div>
-            <div
-              className={
-                'main-menu-item' +
-                (this.state.currentTab === 'list'
-                  ? ' main-menu-item-selected'
-                  : '')
-              }
-              onClick={() => {
-                console.log(JSON.stringify(this.state.node));
-                window.localStorage.setItem(
-                  'tree',
-                  JSON.stringify(this.state.tree),
-                );
-                this.setState({currentTab: 'list'});
-              }}>
-              {t('List')}
-            </div>
-            <div
-              className={
-                'main-menu-item' +
-                (this.state.currentTab === 'tree'
-                  ? ' main-menu-item-selected'
-                  : '')
-              }
-              onClick={() => {
-                if (this.state.currentTab === 'tree') return;
-                window.location = prefix;
-              }}>
-              {t('Tree')}
-            </div>
-          </div>
-          <div className="tools">
-            <button onClick={this.import}>{t('Import')}</button>&nbsp;&nbsp;
-            <button onClick={this.initExport}>{t('Export')}</button>&nbsp;&nbsp;
-            <button onClick={this.reset}>{t('Reset')}</button>&nbsp;&nbsp;
-            {this.state.currentTab === 'tree' && (
-              <div style={{display: 'inline-block', color: 'grey'}}>
-                <button onClick={this.zoomIn}>{t('Zoom in')}</button>
-                &nbsp;&nbsp;
-                <button onClick={this.zoomOut}>{t('Zoom out')}</button>
-                {/* Legenda*/}
+        <div>
+          <div className="main-list">
+            <div className="main-list-header">
+              <div className="title">
+                Ojo nganti kepatèn obor
               </div>
-            )}
-            {this.state.currentTab === 'tree' && (
-              <div style={{display: 'inline-block', color: 'grey'}}>
-                <div
-                  style={{
-                    marginLeft: 10,
-                    width: 15,
-                    height: 3,
-                    background: 'blue',
-                    display: 'inline-block',
-                  }}></div>
-                <span style={{fontSize: 12, paddingLeft: 5}}>
-                  {t('Original derivatives')}
-                </span>
-                <div
-                  style={{
-                    marginLeft: 10,
-                    width: 15,
-                    height: 3,
-                    background: 'green',
-                    display: 'inline-block',
-                  }}></div>
-                <span style={{fontSize: 12, paddingLeft: 5}}>
-                  {t('Outsider')}
-                </span>
-                <div
-                  style={{
-                    marginLeft: 10,
-                    width: 15,
-                    height: 3,
-                    background: 'red',
-                    display: 'inline-block',
-                  }}></div>
-                <span style={{fontSize: 12, paddingLeft: 5}}>
-                  {t('Divorced')}
-                </span>
-                <div
-                  style={{
-                    verticalAlign: 'bottom',
-                    marginBottom: 2,
-                    marginLeft: 10,
-                    width: 15,
-                    height: 15,
-                    background: 'grey',
-                    display: 'inline-block',
-                  }}></div>
-                <span style={{fontSize: 12, paddingLeft: 5}}>
-                  {t('Deceased')}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-        {/* List */}
-        {this.state.currentTab === 'list' && (
-          <div className="family-list">
-            <div className="family-list-sidebar">
               <div>
+                <div className="button" onClick={this.import}>
+                  {t('Import')}
+                </div>
+                <div className="button" onClick={this.initExport}>
+                  {t('Export')}
+                </div>
+                <div className="button" onClick={this.reset}>
+                  {t('Reset')}
+                </div>
+              </div>
+            </div>
+            <div className="main-list-content">
+              <div style={{padding: 10}}>
                 <div className="family-list-buttons">
                   <div
                     className="family-list-button"
                     onClick={() => {
-                      this.setState({form: false}, () => {
-                        this.setState({
-                          form: true,
-                          node: {
+                          let item = {
                             name: '',
                             fullName: '',
                             birthPlace: '',
@@ -589,9 +484,10 @@ class App extends React.Component {
                             secondParent: '',
                             exs: [],
                             mode: 'new',
-                          },
-                        });
-                      });
+                          };
+                          item.mode = 'new';
+                          item.scene = 'form';
+                          this.showModal(item);
                     }}>
                     {t('Add')}
                   </div>
@@ -641,6 +537,11 @@ class App extends React.Component {
                             : '')
                         }
                         onClick={() => {
+                          item.mode = 'edit';
+                          item.scene = 'form';
+                          this.showModal(item);
+                          return;
+
                           let node = item;
                           node.mode = 'edit';
                           this.setState({form: false}, () => {
@@ -653,31 +554,119 @@ class App extends React.Component {
                   })}
               </div>
             </div>
-            {this.state.form && (
-              <div className="family-list-content">
-                <Form tree={this.state.tree} node={this.state.node} />
+            <div className="main-list-footer">
+              <div className="i18n">
+                <span
+                  className={'i18n-options'}
+                  onClick={() => {
+                    i18n.changeLanguage('en');
+                  }}>
+                  English
+                </span>
+                <span style={{color:'grey'}}>
+                &nbsp;/&nbsp;
+                </span>
+                <span
+                  className={'i18n-options'}
+                  onClick={() => {
+                    i18n.changeLanguage('id');
+                  }}>
+                  Bahasa Indonesia
+                </span>
               </div>
-            )}
-          </div>
-        )}
-
-        {/* Tree */}
-        {this.state.currentTab === 'tree' && (
-          <div className="family-tree">
-            {/* Family tree */}
-            <div className="dragscroll">
-              <div id="main-wrapper" ref={this.pdfRef}>
-                <div style={{width: 0, margin: '0 auto'}} id="center"></div>
-                <Node
-                  tree={this.state.tree}
-                  parents={[this.state.tree[0].id]}
-                  root={true}
-                  showModal={this.showModal}
-                />
+              <div
+                className="legenda">
+                <div className="legenda-item">
+                  <div
+                    style={{
+                      marginLeft: 10,
+                      width: 15,
+                      height: 3,
+                      background: '#384190',
+                      display: 'inline-block',
+                    }}></div>
+                  <span style={{fontSize: 12, paddingLeft: 5}}>
+                    {t('Original derivatives')}
+                  </span>
+                </div>
+                <div className="legenda-item">
+                  <div
+                    style={{
+                      marginLeft: 10,
+                      width: 15,
+                      height: 3,
+                      background: 'green',
+                      display: 'inline-block',
+                    }}></div>
+                  <span style={{fontSize: 12, paddingLeft: 5}}>
+                    {t('Outsider')}
+                  </span>
+                </div>
+                <div className="legenda-item">
+                  <div
+                    style={{
+                      marginLeft: 10,
+                      width: 15,
+                      height: 3,
+                      background: 'red',
+                      display: 'inline-block',
+                    }}></div>
+                  <span style={{fontSize: 12, paddingLeft: 5}}>
+                    {t('Divorced')}
+                  </span>
+                </div>
+                <div className="legenda-item">
+                  <div
+                    style={{
+                      verticalAlign: 'bottom',
+                      marginBottom: 2,
+                      marginLeft: 10,
+                      width: 15,
+                      height: 15,
+                      background: 'grey',
+                      display: 'inline-block',
+                    }}></div>
+                  <span style={{fontSize: 12, paddingLeft: 5}}>
+                    {t('Deceased')}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        )}
+          <div className="main-tree">
+            <div className="main-tree-header">
+              {this.state.currentTab === 'tree' && (
+                <div
+                  style={{display: 'inline-block', color: 'grey'}}
+                  className="noselect">
+                  <div className="button zoom-button" onClick={this.zoomIn}>
+                    +
+                  </div>
+                  <div className="button zoom-button" onClick={this.zoomOut}>
+                    -
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="main-tree-content">
+              <div className="family-tree">
+                {/* Family tree
+                 */}
+                <div className="dragscroll">
+                  <div id="main-wrapper" ref={this.pdfRef}>
+                    <div style={{width: 0, margin: '0 auto'}} id="center"></div>
+                    <Node
+                      tree={this.state.tree}
+                      parents={[this.state.tree[0].id]}
+                      root={true}
+                      showModal={this.showModal}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Modal */}
         {this.state.modal && (
           <div className="modal">
@@ -688,7 +677,7 @@ class App extends React.Component {
                   onClick={() => {
                     this.setState({modal: false, node: {}});
                   }}>
-                  <span role="img" aria-label="">
+                  <span className="close-button" role="img" aria-label="">
                     &#10060;{' '}
                   </span>
                 </div>
@@ -877,7 +866,7 @@ class FormLegacy extends React.Component {
               onChange={this.onSearchChange}
             />
 
-            <div className="family-list-items">
+            <div className="family-list-items family-list-items-in-modal">
               {this.props.tree &&
                 this.props.tree
                   .filter(data => {
@@ -949,7 +938,7 @@ class FormLegacy extends React.Component {
               onChange={this.onSearchChange}
             />
 
-            <div className="family-list-items">
+            <div className="family-list-items family-list-items-in-modal">
               {this.props.tree &&
                 this.props.tree
                   .filter(data => {
@@ -1009,7 +998,7 @@ class FormLegacy extends React.Component {
               onChange={this.onSearchChange}
             />
 
-            <div className="family-list-items">
+            <div className="family-list-items family-list-items-in-modal">
               {this.props.tree &&
                 this.props.tree
                   .filter(data => {
@@ -1420,6 +1409,7 @@ class FormLegacy extends React.Component {
                 </div>
               )}
             </div>
+            <br/>
           </div>
         )}
       </div>

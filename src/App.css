@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+
 body {
   overflow: hidden; /* Hide scrollbars */
 }
 
 .App {
   text-align: center;
+  height:100vh
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,6 +38,14 @@ body {
   }
 }
 
+.title {
+  color: #384190;
+  font-weight:bold;
+  padding:20px;
+  font-family: 'Berkshire Swash', cursive;
+  font-size:34;
+}
+
 .node {
   cursor:pointer;
   display:inline-block;
@@ -46,18 +57,18 @@ body {
 }
 
 .node:hover {
-  background:orange !important;
+  background:#384190 !important;
   color:white !important;
 }
 
 .node-deceased {
   cursor:pointer;
   background:lightgrey;
-  color:grey !important;
+  color:black !important;
 }
 
 .node-gen {
-  border:2px solid blue !important;
+  border:2px solid #384190 !important;
 }
 
 
@@ -86,7 +97,7 @@ body {
   cursor : -webkit-grab;
 }
 .header {
-  z-index:997;
+  z-index:990;
   background:grey;
   color:white;
   margin-bottom:50px;
@@ -157,15 +168,72 @@ body {
   margin-top:15px;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.legenda {
+  position:fixed;
+  bottom:0;
+  right:0;
+  z-index:999;
+  padding:10px;
+  color:grey;
+}
+
+.legenda-item {
+  display:inline-block;
+}
+
+.zoom-button {
+  margin-top:10px;
+  padding:0 !important;
+  width:30px !important;
+  height:30px !important;
+  border-radius:30px !important;
+  font-size:20px !important;
+}
+
 .button {
-  padding:10px 15px 10px 15px;
-  margin-right:15px;
-  background:grey;
+  padding:4px 8px 4px 7px;
+  border-radius:5px;
+  margin-right:10px;
+  background:lightgrey;
   width:50px;
-  color:white;
+  color:grey;
   text-align:center;
   display:inline-block;
   cursor:pointer;
+  font-size:14px;
+}
+
+.button:hover {
+  background:#384190 !important;
+  color:white !important;
+}
+
+.button {
+  padding:4px 8px 4px 7px;
+  border-radius:5px;
+  margin-right:10px;
+  background:lightgrey;
+  width:50px;
+  color:grey;
+  text-align:center;
+  display:inline-block;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.button:hover {
+  background:#384190 !important;
+  color:white !important;
 }
 
 .family-list-content {
@@ -181,22 +249,29 @@ body {
 
 .family-list-items {
   margin-top:10px;
-  height:437px;
+  height:calc(100% - 110px);
   overflow-y:scroll;
   overflow-x:hidden;
+  text-align:left;
+}
+
+.family-list-items-in-modal {
+  height:calc(80vh - 100px) !important;
 }
 .family-list-item {
-  padding:3px 7px 3px 7px;
+  padding:10px 15px 10px 15px;
+  margin-left:10px;
   cursor:pointer;
 }
 
 .family-list-item-selected {
-  background:grey !important;
+  background:#384190 !important;
   color:white !important;
 }
 .family-list-item:hover {
-  background:grey !important;
+  background:#384190 !important;
   color:white !important;
+  border-radius:5px;
 }
 
 .family-list-buttons {
@@ -205,16 +280,17 @@ body {
 }
 
 .family-list-button {
-  padding:3px 7px 3px 7px;
-  background:grey;
-  width:282px;
+  padding:7px 10px 7px 10px;
+  border-radius:7px;
+  background:lightgrey;
+  color:grey;
+  width:92%;
   text-align:center;
   display:inline-block;
   cursor:pointer;
-  color:white;
 }
 .family-list-button:hover {
-  background:grey !important;
+  background:#384190 !important;
   color:white !important;
 }
 
@@ -246,9 +322,9 @@ body {
 
 .derivative-line {
   display:block;
-  background:blue;
+  background:#384190;
   width:0px;
-  border-left: 2px solid blue;
+  border-left: 2px solid #384190;
   height:30px;
   margin:0 auto;
 }
@@ -256,7 +332,7 @@ body {
 .derivative-line-ex {
   display:block;
   width:0px;
-  border-left: 2px solid blue;
+  border-left: 2px solid #384190;
   height:30px;
   margin:0 auto;
 margin-right:30%;
@@ -266,7 +342,7 @@ margin-right:30%;
   display:block;
   float:left;
   width:0px;
-  border-left: 2px solid blue;
+  border-left: 2px solid #384190;
   height:20px;
   margin-top:-32px;
   margin-left:49px;
@@ -276,7 +352,7 @@ margin-right:30%;
   display:block;
   width:calc(100% - 160px);
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
   margin:0 auto;
 }
 
@@ -287,7 +363,7 @@ margin-right:30%;
   margin-right:-21px;
   margin-top:-20px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
 }
 
 .sibling-line-left-node {
@@ -295,7 +371,7 @@ margin-right:30%;
   float:left;
   width:72px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
   margin-top:-32px;
   margin-left:51px;
 }
@@ -307,7 +383,7 @@ margin-right:30%;
   margin-left:-21px;
   margin-top:-20px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
 }
 
 .sibling-line-right-with-exs {
@@ -317,11 +393,11 @@ margin-right:30%;
   margin-left:-100px;
   margin-top:-10px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
 }
 
 .sibling-line-right-with-spouse {
-  border-top: 2px solid blue !important;
+  border-top: 2px solid #384190 !important;
   width:calc(50% - 70px) !important;
   margin-right:21px !important;
 }
@@ -331,7 +407,7 @@ margin-right:30%;
   float:left;
   width:50px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
   margin-top:-32px;
   margin-right:50px;
 }
@@ -354,7 +430,7 @@ margin-right:30%;
   margin-left:-20px;
   margin-bottom:20px;
   height:0px;
-  border-top: 2px solid blue;
+  border-top: 2px solid #384190;
 }
 
 .radio {
@@ -365,13 +441,14 @@ margin-right:30%;
 }
 
 .radio:hover {
-  background:grey;
-  border-bottom:2px solid grey;
-  color:white;
+  border-bottom:2px solid #384190;
+  background:#384190 !important;
+  color:white !important;
+  border-radius:5px;
 }
 
 .radio-selected {
-  border-bottom:2px solid grey;
+  border-bottom:2px solid #384190;
   padding:5px;
   margin-right:10px;
   cursor:pointer;
@@ -395,8 +472,8 @@ margin-right:30%;
 .modal {
   display: block;
   position: fixed;
-  z-index: 998;
-  padding-top: 50px; 
+  z-index: 1000;
+  padding-top: 65px; 
   left: 0;
   top: 0;
   width: 100%;
@@ -408,22 +485,24 @@ margin-right:30%;
 
 /* Modal Content */
 .modal-content {
-  background-color: lightgrey;
+  background-color: white;
+  border-radius:10px;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 340px;
   text-align:left;
+  max-height:80vh;
 }
 
 /* The Close Button */
 .close-container {
   height:30px;
 }
-.close {
+.close-button {
   color: grey;
   float: right;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
 }
 
@@ -435,10 +514,11 @@ margin-right:30%;
 }
 
 .search-box {
-  padding-left:5px;
+  padding-left:10px;
   font-size:14px;
-  width:288px;
+  width:95%;
   height:30px;
+  border-radius:5px;
 }
 
 .select-for-label {
@@ -458,13 +538,9 @@ margin-right:30%;
 }
 
 .i18n {
+  margin-top:10px; 
   padding:5px 10px 5px 10px;
   font-size:14px;
-  background:lightgrey;
-  position:fixed;
-  bottom:0;
-  left:0;
-  z-index:999;
 }
 .i18n-options {
   cursor:pointer;
@@ -476,4 +552,72 @@ margin-right:30%;
 }
 .i18n-selected {
   color:black !important;
+}
+
+
+.main-list {
+  height:100vh;
+  width:300px;
+  display:inline-block;
+  vertical-align:top;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:998;
+}
+
+.main-list-header {
+  height:100px;
+  border-bottom:1px solid lightgrey;
+}
+.main-list-content {
+  height:calc(100vh - 150px);
+  border-bottom:1px solid lightgrey;
+}
+.main-list-footer {
+  height:50px;
+}
+
+.main-tree {
+  height:100vh;
+  width:calc(100vw - 302px);
+  display:inline-block;
+  vertical-align:top;
+  border-left:1px solid lightgrey;
+  position:fixed;
+  top:0;
+  right:0;
+  z-index:998;
+}
+
+.main-tree-header {
+  height:50px;
+  border-bottom:1px solid lightgrey;
+}
+.main-tree-content {
+}
+.main-tree-footer {
+}
+
+@media only screen 
+and (max-width : 600px) {
+  .main-list {
+    border:0px !important;
+    width:100vw !important;
+  }
+  .main-tree {
+    display:none !important;
+  }
+  .legenda {
+    display:none !important;
+  }
+  .modal-content {
+    padding-top:10px !important;
+    height:100vh !important;
+    width:320px;
+    overflow:scroll !important;
+  }
+  .family-list-form-label {
+    width:90px !important;
+  }
 }
